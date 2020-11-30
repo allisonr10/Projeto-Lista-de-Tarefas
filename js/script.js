@@ -1,100 +1,98 @@
 //Referenciar input
 
-let input = document.querySelector('input[name=tarefa')
+let input = document.querySelector('input[name=tarefa');
 
 //referenciar botão
 
-let botao = document.querySelector('#botao')
+let botao = document.querySelector('#botao');
 
 //referenciar lista
 
-let lista = document.querySelector('#lista')
+let lista = document.querySelector('#lista');
 
-let card = document.querySelector('.card')
+let card = document.querySelector('.card');
 
 //representando a lista de tarefas
 
-
-let tarefas = [
-  'Jogar',
-  'Estudar',
-  'Comer',
-  'Ver TV',
-  'Exercitar'
-]
+let tarefas = ['Jogar', 'Estudar', 'Comer', 'Ver TV', 'Exercitar'];
 
 function renderizar() {
   //limpar a listagem de itens antes de renderizar novamente a tela
-  lista.innerHTML = ''
+  lista.innerHTML = '';
 
   //fazer iteração em cada elemento do array tarefas
   for (tarefa of tarefas) {
     //criar o item da lista
-    let itemLista = document.createElement('li')
+    let itemLista = document.createElement('li');
 
     //adicionar classes no item da lista
-    itemLista.setAttribute('class', 'list-group-item list-group-item-action')
+    itemLista.setAttribute('class', 'list-group-item list-group-item-action');
+
+    //adicionar evento de clique no item da lista
+    itemLista.onclick = function () {
+      deletarTarefa();
+    };
 
     //criar um texto
-    let itemTexto = document.createTextNode(tarefa)
+    let itemTexto = document.createTextNode(tarefa);
 
     //adicionar o texto no item da lista
-    itemLista.appendChild(itemTexto)
+    itemLista.appendChild(itemTexto);
 
     //adicionar o item da lista na lista
-    lista.appendChild(itemLista)
-
+    lista.appendChild(itemLista);
   }
 }
 
 //executando a função para renderizar as tarefas
-renderizar()
+renderizar();
 
 //adicionar o evento do clique do botão
 botao.onclick = function () {
-
   //if para não deixar inserir uma tarefa em branco
   if (input.value === '') {
-
-
     //alert('Digite uma tarefa')
 
     //Outro método para acusar erro
 
-    let span = document.createElement('span')
-    span.setAttribute('class', 'alert alert-warning')
+    let span = document.createElement('span');
+    span.setAttribute('class', 'alert alert-warning');
 
-    let msg = document.createTextNode('Você precisa informar a tarefa')
+    let msg = document.createTextNode('Você precisa informar a tarefa');
 
-    span.appendChild(msg)
+    span.appendChild(msg);
 
-    card.appendChild(span)
-
-
-
+    card.appendChild(span);
   } else {
-
     //recuperar o valor do input
-    let novaTarefa = input.value
+    let novaTarefa = input.value;
     //adicionar a nova tarefa na lista(array)
-    tarefas.push(novaTarefa)
+    tarefas.push(novaTarefa);
 
     //renderizar novamente a lista
-    renderizar()
+    renderizar();
     //limpar input após escrever tarefa
-    input.value = ''
+    input.value = '';
 
-    removerSpan()
+    removerSpan();
   }
-}
-
+};
 
 //função para remover mensagem de erro
 
 function removerSpan() {
-  let spans = document.querySelectorAll('span')
+  let spans = document.querySelectorAll('span');
 
   for (let i = 0; i < spans.length; i++) {
-    card.removeChild(spans[i])
+    card.removeChild(spans[i]);
   }
+}
+
+function deletarTarefa() {
+
+  //remove a tarefa do array
+  tarefas.splice(tarefas, 1);
+
+  //renderizar novamente a tela
+  renderizar()
 }
