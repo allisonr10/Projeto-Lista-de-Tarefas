@@ -14,7 +14,9 @@ let card = document.querySelector('.card');
 
 //representando a lista de tarefas
 
-let tarefas = ['Jogar', 'Estudar', 'Comer', 'Ver TV', 'Exercitar'];
+//buscando o local storage do navegador
+let tarefas = JSON.parse(localStorage.getItem('nuvem')) || [];
+//coloca-se esse ou array vazio (|| []) se não dará erro no elemento tarefas
 
 function renderizar() {
   //limpar a listagem de itens antes de renderizar novamente a tela
@@ -75,6 +77,8 @@ botao.onclick = function () {
     input.value = '';
 
     removerSpan();
+
+    salvarStorage()
   }
 };
 
@@ -95,4 +99,13 @@ function deletarTarefa() {
 
   //renderizar novamente a tela
   renderizar()
+  salvarStorage()
+}
+
+
+// salvar dados na memória do navegador
+
+function salvarStorage() {
+  localStorage.setItem('nuvem', JSON.stringify(tarefas))
+  //JSOM stringify transforma o array em uma string
 }
